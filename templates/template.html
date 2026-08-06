@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AltoMn{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "template.css" %}">
+</head>
+<body >
+    
+    <!--NAV BAR-->
+    <nav>
+        <ul>
+            <li><img src="{% static "logo.jpeg" %}" class="nav_logo"></li>
+            <li class = "link"><a href=" {% url 'home' %} ">Home</a></li>
+            <li class = "link">News</li>
+            <li class = "link">Stagione</li>
+            <li class = "link">Squadra</li>
+            <li class = "link">Società</li>
+            <li class = "link"><a href=" {% url 'login' %} ">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}        
+    </div>
+    <footer>
+        <p>numero di telefono</p>
+        <p>Indirizzo</p>
+        <p>emai</p>
+    </footer>
+
+</body>
+</html>

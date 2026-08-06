@@ -1,0 +1,124 @@
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/roboto-v51-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+body{
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: auto;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto",sans-serif;
+}
+
+.container{
+    margin: 5%;
+}
+nav ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: blue;
+    overflow: hidden;
+    float: center;
+}
+nav li{
+    float: left;
+    color: white;
+    text-align: center;
+}
+.nav_logo{
+    height: 100px;
+    width: auto;
+    justify-content: space-between;
+}
+.link{
+    margin: 3%;
+    font-size: larger;
+}
+footer{
+    background-color: blue;
+    color: white;
+    padding: 3%;
+    text-align: center;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formItem{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+}
+input{
+    border: 1px solid black;
+    padding: 10px 12px;
+}
+form{
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;          /* Larghezza massima del form */
+    display: flex;
+    flex-direction: column;    /* Dispone i campi uno sotto l'altro */
+    gap: 15px;
+}
+
+button{
+    padding: 12px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: darkcyan;
+}
+#authFooter{
+    color: blue;
+    text-decoration: underline;    
+}
+#id_ruolo {
+    width: 80%;
+    padding: 10px 12px;
+    border: 1px solid black;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+    visibility: visible !important;
+    display: block !important;
+}
+
+#id_ruolo:focus {
+    border-color: black;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
+}
+
+#id_ruolo option {
+    padding: 10px;
+    color: black;
+    background-color: white;
+}

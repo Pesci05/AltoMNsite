@@ -1,0 +1,41 @@
+{% extends 'template.html' %}
+
+{% block title %}Accedi - ASD Alto Mantovano{% endblock %}
+
+{% block content %}
+<h2>ACCEDI</h2>
+<div class="auth">
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="formItem">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">Invia</button>
+
+        <div class="auth-footer">
+            <p>Non sei ancora registrato? <a href="{% url 'register' %}" id="authFooter">Crea un account</a></p>
+        </div>
+    </form>
+</div> 
+{% endblock %}

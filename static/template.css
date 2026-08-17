@@ -53,7 +53,7 @@ a{
     font-weight: bold;
 }
 
-.auth{
+.form_container{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -121,4 +121,10 @@ button:hover{
     padding: 10px;
     color: black;
     background-color: white;
+}
+.dashboardContainer{
+    display: flex;
+    gap: 2rem;               /* Spazio tra i due form */
+    align-items: flex-start;  /* Allinea i form in alto */
+    width: 100%;
 }

@@ -1,0 +1,87 @@
+{% extends "template.html" %}
+
+{% block title %}Dashboard Caoch{% endblock title %}
+
+{% block content %}
+    <h1>Benvenuto {{ request.user.first_name }}</h1>
+    <div class="dashboardContainer">
+        <form method='post' action="{% url 'creaAtleta' %}" novalidate>
+            <h2>Registra Atleta</h2>
+            {% csrf_token %}
+
+            <input type="hidden" name="next" value="{{ request.path }}">
+
+             {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in atleta_form %}
+                <div class="formItem">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" name="btn_submit_atleta">Salva Atleta</button>
+        </form>
+
+        <form method='post' novalidate>
+            <h2>Registra Partita</h2>
+            {% csrf_token %}
+
+             {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in crea_match_form %}
+                <div class="formItem">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" name="btn_submit_match">Salva Partita</button>
+        </form>
+
+        <form>
+            <h2>Modfica Partita</h2>
+            <label for="seleziona_partita">Seleziona una partita</label> 
+            <select class="custom-selection" name="partita_pk" id="selezione_partita">
+                <option value="">------</option>
+
+                {% for partita in partite %}
+                    <option value="{{ partita.pk }}">
+                        {{ partita.team }} vs {{ partita.avversari }} ({{ partita.giornoPartita|date:"d/m/Y" }})
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="button" class="btn btn-primary" onclick="goToModificaPartita()">Modifica Partita Selezionata</button>
+        </form>
+
+    </div>
+{% endblock content %}

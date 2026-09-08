@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CustomLoginForm,CustomUserCretionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from teams.forms import AtletaCreationForm, SquadraCreationForm
+from teams.forms import AtletaCreationForm, SquadraCreationForm, MatchCreationForm
+from teams.models import Matches
 
 # Create your views here.
 class RegisterView(SuccessMessageMixin,CreateView):
@@ -30,7 +31,7 @@ class CustomLoginView(LoginView):
         if user.ruolo == 'dirigente':
             return '/login/dashboard_dirigente'
         elif user.ruolo == 'allenatori':
-            return '/login/login.html'
+            return '/login/dashboard_coach'
         
 class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
     template_name='/home/mpesci/AltoMNsite/login/templates/login/dirigentiDashboard.html'
@@ -40,3 +41,46 @@ class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
         context['atleta_form'] = AtletaCreationForm()
         context['squadra_form'] = SquadraCreationForm()
         return context
+
+class CoachDashboardView(LoginRequiredMixin,TemplateView):
+    template_name = '/home/mpesci/AltoMNsite/login/templates/login/coachDashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'atleta_form' not in context:
+            context['atleta_form'] = AtletaCreationForm()
+            
+        # 2. Form per la partita (passiamo l'utente loggato per filtrare le sue squadre)
+        if 'crea_match_form' not in context:
+            context['crea_match_form'] = MatchCreationForm(user=self.request.user)
+
+        context['partite'] = Matches.objects.all()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        # A. Se è stato cliccato il pulsante per salvare la partita
+        if 'btn_submit_match' in request.POST:
+            crea_match_form = MatchCreationForm(request.POST, user=request.user)
+            if crea_match_form.is_valid():
+                crea_match_form.save()
+                return redirect('dashboard_coach')  # Sostituisci col nome della tua URL della dashboard
+            else:
+                # Se ci sono errori, ricarichiamo il form compilato con i messaggi di errore
+                return self.render_to_response(
+                    self.get_context_data(crea_match_form=crea_match_form)
+                )
+
+        # B. Se è stato cliccato il pulsante per creare l'atleta
+        elif 'btn_submit_atleta' in request.POST:
+            atleta_form = AtletaCreationForm(request.POST)
+            if atleta_form.is_valid():
+                atleta_form.save()
+                return redirect('dashboard_coach')
+            else:
+                return self.render_to_response(
+                    self.get_context_data(atleta_form=atleta_form)
+                )
+
+        # Fallback se non corrisponde a nessuno dei due
+        return self.get(request, *args, **kwargs)
+    

@@ -97,7 +97,7 @@ button:hover{
     color: blue;
     text-decoration: underline;    
 }
-#id_ruolo {
+.custom-selection {
     width: 80%;
     padding: 10px 12px;
     border: 1px solid black;
@@ -112,12 +112,12 @@ button:hover{
     display: block !important;
 }
 
-#id_ruolo:focus {
+.custom-selection:focus {
     border-color: black;
     box-shadow: 0 0 5px rgba(0, 86, 179, 0.3);
 }
 
-#id_ruolo option {
+.custom-selection option {
     padding: 10px;
     color: black;
     background-color: white;

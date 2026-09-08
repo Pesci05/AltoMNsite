@@ -1,0 +1,21 @@
+<div class="player-stat-card">
+  <div class="card-header">
+    {% if stat.numero_maglia is not None %}
+      <span class="jersey-badge">#{{ stat.numero_maglia }}</span>
+    {% endif %}
+    <span class="player-name">{{ stat.player.get_full_name }}</span>
+  </div>
+  
+  <div class="card-body">
+    <div class="stat-main">
+      <span class="stat-value">{{ stat.points }}</span>
+      <span class="stat-label">Punti</span>
+    </div>
+    
+    <div class="stat-details">
+      <div><strong>Falli:</strong> {{ stat.fouls }}</div>
+      <div><strong>Tiri da 3:</strong> {{ stat.three_pointers }}</div>
+      <div><strong>Tiri Liberi:</strong> {{ stat.free_throws_made }}/{{ stat.free_throws_attempted }}</div>
+    </div>
+  </div>
+</div>

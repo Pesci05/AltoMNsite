@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Ultima Prestazione</h3>
+  
+  <!-- Inclusione della card singola -->
+  {% include 'teams/includes/_player_stat_card.html' with stat=latest_player_stat %}
+{% endblock %}

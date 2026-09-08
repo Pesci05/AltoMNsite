@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Atleta, Squadre
+from .models import Atleta, Squadre,Matches
 
 User = get_user_model()
 
@@ -30,7 +30,7 @@ class SquadraCreationForm(forms.ModelForm):
 class AtletaCreationForm(forms.ModelForm):
     squadra = forms.ModelChoiceField(
         queryset=Squadre.objects.all(), 
-        widget=forms.Select(attrs={'id': 'id_ruolo', 'class': 'form-control'}),
+        widget=forms.Select(attrs={'class': 'custom-selection'}),
         label = 'Squadra',
         required=False
         )
@@ -45,6 +45,7 @@ class AtletaCreationForm(forms.ModelForm):
         label='Email',
         widget=forms.EmailInput(attrs={'class':'fomr-control','placeholder':'mario.rossi@email.com'}),
         required=False)
+
     
     class Meta:
         model = Atleta
@@ -54,7 +55,20 @@ class AtletaCreationForm(forms.ModelForm):
         }
         exclude = ['user']
         
+    def clean(self):
+        cleaned_data = super().clean()
+        squadra = cleaned_data.get('squadra')
+        numero_maglia = cleaned_data.get('numero_maglia')
 
+        if squadra and numero_maglia is not None:
+            # Verifica se esiste già un atleta con lo stesso numero nella stessa squadra
+            if Atleta.objects.filter(squadra=squadra, numero_maglia=numero_maglia).exists():
+                self.add_error(
+                    'numero_maglia',
+                    f"Il numero {numero_maglia} è già assegnato a un altro atleta del/della {squadra.nome}."
+                )
+
+        return cleaned_data
 
     def save(self, commit = True):
         email = self.cleaned_data['email']
@@ -87,4 +101,102 @@ class AtletaCreationForm(forms.ModelForm):
 
         return atleta
 
+
+class MatchCreationForm(forms.ModelForm):
+    class Meta:
+        model = Matches
+        # Escludiamo players_stats perché i tabellini si inseriscono con i FormSet separatamente
+        fields = [
+            'team', 
+            'avversari', 
+            'giornoPartita', 
+            'location_type', 
+            'indirizzo', 
+            'giocata',
+        ]
+        
+        # Personalizziamo i widget per un aspetto e un'usabilità migliori
+        widgets = {
+            'team': forms.Select(attrs={'class': 'custom-selection'}),
+            'avversari': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Es. Virtus Bologna'
+            }),
+            'giornoPartita': forms.DateTimeInput(attrs={
+                'class': 'form-control', 
+                'type': 'datetime-local' # Mostra il selettore data/ora nel browser
+            }),
+            'location_type': forms.Select(attrs={'class': 'custom-selection'}),
+            'indirizzo': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Via e Città del palazzetto'
+            }),
+            'giocata': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        
+        labels = {
+            'team': 'Squadra',
+            'avversari': 'Squadra Avversaria',
+            'giornoPartita': 'Data e Ora',
+            'location_type': 'In Casa / Trasferta',
+            'indirizzo': 'Indirizzo Campo',
+            'giocata': 'Partita Conclusa?',
+        }
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        
+        super().__init__(*args, **kwargs)
+        if user:
+            if user.ruolo == 'COACH':
+                self.fields['team'].queryset = Squadre.objects.filter(allenatori=user)
+            else:
+                print("--- DEBUG FORM: Utente non è . Mostro tutte le squadre. ---")
+
+class MatchUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Matches
+        fields = [
+            'team', 
+            'avversari', 
+            'giornoPartita', 
+            'location_type', 
+            'indirizzo', 
+            'giocata', 
+            'puntiFatti', 
+            'puntiSubiti'
+        ]
+        widgets = {
+            'team': forms.Select(attrs={'class': 'custom-selection'}),
+            'avversari': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Es. Virtus Bologna'}),
+            'giornoPartita': forms.DateTimeInput(attrs={
+                'class': 'form-control', 
+                'type': 'datetime-local'  # Selettore data/ora HTML5
+            }),
+            'location_type': forms.Select(attrs={'class': 'custom-selection'}),
+            'indirizzo': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Via e Città del palazzetto'}),
+            'giocata': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'puntiFatti': forms.NumberInput(attrs={'class': 'form-control'}),
+            'puntiSubiti': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'team': 'Squadra',
+            'avversari': 'Squadra Avversaria',
+            'giornoPartita': 'Data e Ora',
+            'location_type': 'Casa / Trasferta',
+            'indirizzo': 'Palazzetto / Indirizzo',
+            'giocata': 'Partita Conclusa',
+            'puntiFatti': 'Punti Segnati',
+            'puntiSubiti': 'Punti Subiti',
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        
+        super().__init__(*args, **kwargs)
+
+        if user:
+            if user.ruolo == 'COACH':
+                self.fields['team'].queryset = Squadre.objects.filter(allenatori=user)
+            else:
+                print("--- DEBUG FORM: Utente non è . Mostro tutte le squadre. ---")
 

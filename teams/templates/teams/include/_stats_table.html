@@ -1,0 +1,44 @@
+<table class="stats-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Giocatore</th>
+      <th>Punti</th>
+      <th>Falli</th>
+      <th>3 Punti</th>
+      <th>TL (Fatti/Tirati)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stat in stats_list %}
+      <tr>
+        <td>
+          {% if stat.numero_maglia is not None %}
+            <strong>#{{ stat.numero_maglia }}</strong>
+          {% else %}
+            -
+          {% endif %}
+        </td>
+        <td>{{ stat.player.get_full_name }}</td>
+        <td><strong>{{ stat.points }}</strong></td>
+        <td>{{ stat.fouls }}</td>
+        <td>{{ stat.three_pointers }}</td>
+        <td>{{ stat.free_throws_made }}/{{ stat.free_throws_attempted }}</td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="6" class="text-center">Nessuna statistica inserita per questa partita.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+  {% if show_totals and stats_list %}
+    <tfoot>
+      <tr>
+        <td colspan="2"><strong>Totale</strong></td>
+        <td><strong>{{ total_points|default:"-" }}</strong></td>
+        <td><strong>{{ total_fouls|default:"-" }}</strong></td>
+        <td colspan="2"></td>
+      </tr>
+    </tfoot>
+  {% endif %}
+</table>

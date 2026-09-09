@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView,DetailView,ListView,UpdateView
+from django.views.generic import CreateView,DetailView,ListView,UpdateView,DeleteView
 from .models import Atleta,Squadre,Matches
 from .forms import AtletaCreationForm,SquadraCreationForm,MatchUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -46,7 +46,12 @@ class MatchListView(ListView):
 class MatchUpdateView(LoginRequiredMixin,UpdateView):
     model=Matches
     form_class=MatchUpdateForm
+    template_name="teams/match_update.html"
     success_url = reverse_lazy('dashboard_coach')
 
+class MatchDeleteView(LoginRequiredMixin, DeleteView):
+    model = Matches
+    success_url = reverse_lazy('dashboard_coach') 
 
-    
+    def get(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)

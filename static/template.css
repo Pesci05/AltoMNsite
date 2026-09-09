@@ -89,9 +89,23 @@ button{
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    font-weight: bold;
 }
 button:hover{
     background-color: darkcyan;
+}
+.deleteButton{
+    padding: 12px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.deleteButton:hover{
+    background-color: tomato;
 }
 #authFooter{
     color: blue;

@@ -41,7 +41,7 @@
             <h2>Registra Partita</h2>
             {% csrf_token %}
 
-             {% if form.non_field_errors %}
+            {% if form.non_field_errors %}
                 <div class="alert alert-error">
                     {% for error in form.non_field_errors %}
                         <p>{{ error }}</p>
@@ -50,7 +50,7 @@
             {% endif %}
 
             {% for field in crea_match_form %}
-                <div class="formItem">
+            <div class="formItem">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
                 {% if field.errors %}
@@ -74,13 +74,14 @@
                 <option value="">------</option>
 
                 {% for partita in partite %}
-                    <option value="{{ partita.pk }}">
+                    <option value="{{ partita.pk }}" data-url= "{% url "modificaPartita" partita.pk %}" data-url-elimina="{% url 'eliminaPartita' partita.pk %}">
                         {{ partita.team }} vs {{ partita.avversari }} ({{ partita.giornoPartita|date:"d/m/Y" }})
                     </option>
                 {% endfor %}
             </select>
 
-            <button type="button" class="btn btn-primary" onclick="goToModificaPartita()">Modifica Partita Selezionata</button>
+            <button type="button" class="btn btn-primary" onclick="goToModificaPartita()">Modifica Partita</button>
+            <button type="button" class="deleteButton" onclick="goToEliminaPartita()">Elimina Partita</button>
         </form>
 
     </div>

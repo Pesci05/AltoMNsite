@@ -23,14 +23,33 @@ carousel[0].addEventListener('pointerup', () => {
 
 function goToModificaPartita(){
     var select = document.getElementById('selezione_partita');
-    console.log(select);
-    var pk = select.value;
-    if(pk){
-        var urlTemplate = "{% 'modificaPartita' 0 %}";
-        var targetUrl = urlTemplate.replace('0',pk);
+    var selectedOption = select.options[select.selectedIndex];
 
+   var targetUrl = selectedOption.getAttribute('data-url');
+    
+    if (targetUrl) {
+        // Reindirizza all'URL assoluto (es: /teams/partita/2/modifica/)
         window.location.href = targetUrl;
-    }else{
+    } else {
         alert("Seleziona prima una partita dall'elenco.");
+    }
+}
+function goToEliminaPartita() {
+    var select = document.getElementById('selezione_partita');
+    var selectedOption = select.options[select.selectedIndex];
+    var targetUrl = selectedOption.getAttribute('data-url-elimina');
+    
+    console.log(targetUrl);
+    if (!targetUrl) {
+        alert("Seleziona prima una partita dall'elenco.");
+        return;
+    }
+
+    // Popup nativo del browser
+    var partitaTesto = selectedOption.text.trim();
+    var conferma = confirm("Sei sicuro di voler eliminare la partita:\n" + partitaTesto + "?\n\nL'azione è irreversibile.");
+    
+    if (conferma) {
+        window.location.href = targetUrl;
     }
 }

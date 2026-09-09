@@ -1,0 +1,37 @@
+{% extends "template.html" %}
+
+{% block title %}Modifica Partita{% endblock title %}
+
+{% block content %}
+    <div class="dashboardContainer">
+        <form method='post' action = "{% url "modificaPartita" object.pk %}" novalidate>
+            <h2>Modifica partita</h2>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="formItem">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+            <button type="submit" name="btn_submit_match">Salva Partita</button>
+        </form>
+    </div>
+{% endblock content %}

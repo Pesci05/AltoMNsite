@@ -70,13 +70,14 @@ class PlayerMatchStats(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='stats',
-        limit_choices_to={'role': 'ATHLETE'}
+        limit_choices_to={'ruolo': 'atleta'}
     )
 
     points = models.PositiveIntegerField(default=0)
     fouls = models.PositiveIntegerField(default=0)
     
-    three_pointers = models.PositiveIntegerField(default=0)
+    three_pointers_made = models.PositiveIntegerField(default=0)
+    three_pointers_attempted = models.PositiveIntegerField(default=0)
     free_throws_made = models.PositiveIntegerField(default=0)
     free_throws_attempted = models.PositiveIntegerField(default=0)
 

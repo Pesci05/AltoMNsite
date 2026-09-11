@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Benvenuto {{ request.user.first_name }}</h1>
     <div class="dashboardContainer">
-        <form method='post' action="{% url 'creaAtleta' %}" novalidate>
+        <form method='post'  class="form-container" action="{% url 'creaAtleta' %}" novalidate>
             <h2>Registra Atleta</h2>
             {% csrf_token %}
 
@@ -37,7 +37,7 @@
             <button type="submit" name="btn_submit_atleta">Salva Atleta</button>
         </form>
 
-        <form method='post' novalidate>
+        <form method='post'  class="form-container" novalidate>
             <h2>Registra Partita</h2>
             {% csrf_token %}
 
@@ -67,8 +67,8 @@
             <button type="submit" name="btn_submit_match">Salva Partita</button>
         </form>
 
-        <form>
-            <h2>Modfica Partita</h2>
+        <form class="form-container">
+            <h2>Modifica/Elimina Partita</h2>
             <label for="seleziona_partita">Seleziona una partita</label> 
             <select class="custom-selection" name="partita_pk" id="selezione_partita">
                 <option value="">------</option>

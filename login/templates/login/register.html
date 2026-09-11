@@ -3,9 +3,9 @@
 {% block title %}Registrati - ASD Alto Mantovano{% endblock %}
 
 {% block content %}
-<h2>ACCEDI</h2>
+<h2>Registrati</h2>
 <div class="form_container">
-    <form method="post" novalidate>
+    <form method="post" class="form-container" novalidate>
         {% csrf_token %}
 
         {% if form.non_field_errors %}

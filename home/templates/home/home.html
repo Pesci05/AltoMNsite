@@ -1,0 +1,11 @@
+{% extends "template.html" %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+    <h1>Last Games</h1>
+
+    <ul>
+        {% for match in last_matches %}
+            <li>{{ match.giornoPartita }}: {{ match.team.nome }} vs {{ match.avversari }} - Score: {{ match.puntiFatti }}</li>
+        {% endfor %}
+{% endblock content %}
+

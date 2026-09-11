@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Benvenuto {{ request.user.first_name }}</h1>
     <div class="dashboardContainer">
-        <form method='post' action="{% url 'creaSquadra' %}" novalidate>
+        <form method='post' class="form-container" action="{% url 'creaSquadra' %}" novalidate>
             <h2>Registra Squadra</h2>
             {% csrf_token %}
 
@@ -35,7 +35,7 @@
             <button type="submit">Salva Squadra</button>
         </form>
 
-        <form method='post' action="{% url 'creaAtleta' %}" novalidate>
+        <form method='post'  class="form-container" action="{% url 'creaAtleta' %}" novalidate>
             <h2>Registra Atleta</h2>
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ request.path }}">

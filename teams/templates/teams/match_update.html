@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="dashboardContainer">
-        <form method='post' action = "{% url "modificaPartita" object.pk %}" novalidate>
+        <form method='post' class = "form-container" action = "{% url "modificaPartita" object.pk %}" novalidate>
             <h2>Modifica partita</h2>
             {% csrf_token %}
             {% if form.non_field_errors %}
@@ -33,5 +33,59 @@
             
             <button type="submit" name="btn_submit_match">Salva Partita</button>
         </form>
+        <div class="table-container">
+            <form method='post' action>
+                <h2>Tabellino: {{ match.team.name }} vs {{ match.avversari }}</h2>
+                {% csrf_token %}
+                {{ formset.management_form }}
+                <table class="custom-table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Giocatore</th>
+                            <th>N° Maglia</th>
+                            <th>Punti</th>
+                            <th>Falli</th>
+                            <th>Tiri da 3 tentati</th>
+                            <th>Tiri da 3 fatti</th>
+                            <th>TL Fatti</th>
+                            <th>TL Tirati</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in formset %}
+                            <tr>
+                                <td>
+                                    <!-- Campi nascosti fondamentali -->
+                                    {{ form.id }}
+                                    {{ form.player }}
+                                    
+                                    <!-- Stampa del nome del giocatore (testo fisso) -->
+                                    <strong>
+                                        {% if form.instance.pk %}
+                                            {{ form.instance.player.get_full_name }}
+                                        {% else %}
+                                            {{ form.initial.player.get_full_name }}
+                                        {% endif %}
+                                    </strong>
+                                    
+                                    {{ form.non_field_errors }}
+                                    {{ form.player.errors }}
+                                </td>
+                                <td>{{ form.numero_maglia }}{{ form.numero_maglia.errors }}</td>
+                                <td>{{ form.points }}{{ form.points.errors }}</td>
+                                <td>{{ form.fouls }}{{ form.fouls.errors }}</td>
+                                <td>{{ form.three_pointers_attempted }}{{ form.three_pointers_attempted.errors }}</td>
+                                <td>{{ form.three_pointers_made }}{{ form.three_pointers_made.errors }}</td>
+                                <td>{{ form.free_throws_made }}{{ form.free_throws_made.errors }}</td>
+                                <td>{{ form.free_throws_attempted }}{{ form.free_throws_attempted.errors }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            <button type="submit" name="btn_salva_tabellino" class="btn btn-primary btn-lg mt-3">Salva Tabellino</button>
+            <a href="{% url 'dashboard_coach' %}" class="btn btn-secondary btn-lg mt-3 ms-2">Annulla</a>
+            </form>
+        </div>
     </div>
 {% endblock content %}

@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'template.html' %}
 
 {% block content %}
-  <h2>{{ match.team.name }} vs {{ match.opponent }}</h2>
+  <h2>{{ match.team.nome }} vs {{ match.avversari }}</h2>
 
   <!-- Inclusione della tabella principale -->
-  {% include 'teams/includes/_stats_table.html' with stats_list=box_score show_totals=True %}
+  {% include 'teams/includes/_stats_table.html' %}
 {% endblock %}

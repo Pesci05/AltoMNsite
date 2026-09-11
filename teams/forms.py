@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Atleta, Squadre,Matches
+from .models import Atleta, Squadre,Matches,PlayerMatchStats
 
 User = get_user_model()
 
@@ -147,7 +147,7 @@ class MatchCreationForm(forms.ModelForm):
         
         super().__init__(*args, **kwargs)
         if user:
-            if user.ruolo == 'COACH':
+            if user.ruolo == 'allenatori':
                 self.fields['team'].queryset = Squadre.objects.filter(allenatori=user)
             else:
                 print("--- DEBUG FORM: Utente non è . Mostro tutte le squadre. ---")
@@ -195,8 +195,42 @@ class MatchUpdateForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if user:
-            if user.ruolo == 'COACH':
+            if user.ruolo == 'allenatori':
                 self.fields['team'].queryset = Squadre.objects.filter(allenatori=user)
             else:
                 print("--- DEBUG FORM: Utente non è . Mostro tutte le squadre. ---")
 
+class TabellinoPartitaForm(forms.ModelForm):
+    class Meta:
+        model = PlayerMatchStats
+        # Campi allineati esattamente a quanto richiesto dalla griglia e dal modello
+        fields = [
+            'player',
+            'numero_maglia',
+            'points',
+            'fouls',
+            'three_pointers_made',
+            'three_pointers_attempted',
+            'free_throws_made',
+            'free_throws_attempted',
+        ]
+        widgets = {
+            'player': forms.HiddenInput(),
+            'numero_maglia': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0, 'max': 99}),
+            'points': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
+            'fouls': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0, 'max': 5}),
+            'three_pointers_made': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
+            'three_pointers_attempted': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
+            'free_throws_made': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
+            'free_throws_attempted': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
+        }
+        labels = {
+            'player': 'Giocatore',
+            'numero_maglia': 'N° Maglia',
+            'points': 'Punti',
+            'fouls': 'Falli',
+            'three_pointers_made': 'Triple Segnate',
+            'three_pointers_attempted': 'Triple Tentate',
+            'free_throws_made': 'TL Segnati',
+            'free_throws_attempted': 'TL Tentati',
+        }

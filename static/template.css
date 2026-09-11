@@ -16,7 +16,7 @@ body{
 }
 
 .container{
-    margin: 5%;
+    margin: 1%;
 }
 nav ul{
     list-style-type: none;
@@ -36,21 +36,18 @@ nav li{
     width: auto;
     justify-content: space-between;
 }
-.link{
+.linkNavBar{
     margin: 3%;
     font-size: larger;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 footer{
     background-color: blue;
     color: white;
     padding: 3%;
     text-align: center;
-}
-
-a{
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 .form_container{
@@ -69,7 +66,8 @@ input{
     border: 1px solid black;
     padding: 10px 12px;
 }
-form{
+
+.form-container{
     background: white;
     padding: 30px;
     border-radius: 8px;
@@ -138,7 +136,71 @@ button:hover{
 }
 .dashboardContainer{
     display: flex;
-    gap: 2rem;               /* Spazio tra i due form */
-    align-items: flex-start;  /* Allinea i form in alto */
+    gap: 2rem;               
+    align-items: flex-start;  
     width: 100%;
+    max-width: 100%;          /* Impedisce di superare il 100% della pagina */
+    box-sizing: border-box;
+}
+.table-container {
+    flex: 1;                  
+    min-width: 0;             
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;   
+    overflow-x: auto; 
+    overflow-y: hidden;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin: 0;
+    padding: 5px;
+}
+.custom-table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Intestazione (Header) */
+.custom-table thead tr {
+  background-color: #1e293b; 
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 14px 18px;
+  white-space: nowrap;
+}
+
+
+.custom-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.custom-table tbody tr:nth-of-type(even) {
+  background-color: #f8fafc; /* Grigio chiarissimo per righe pari */
+}
+
+.custom-table tbody tr:hover {
+  background-color: #f1f5f9; /* Evidenzia la riga selezionata */
+}
+
+.custom-table tbody tr:last-of-type {
+  border-bottom: none;
+}
+.custom-table input[type="text"],
+.custom-table input[type="number"] {
+  width: 70px;
+  box-sizing: border-box;
+  text-align: center;
 }

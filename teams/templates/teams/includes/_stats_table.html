@@ -1,11 +1,11 @@
-<table class="stats-table">
+<table class="custom-table">
   <thead>
     <tr>
       <th>#</th>
       <th>Giocatore</th>
       <th>Punti</th>
       <th>Falli</th>
-      <th>3 Punti</th>
+      <th>3 Punti (Fatti/Tirati)</th>
       <th>TL (Fatti/Tirati)</th>
     </tr>
   </thead>
@@ -22,7 +22,7 @@
         <td>{{ stat.player.get_full_name }}</td>
         <td><strong>{{ stat.points }}</strong></td>
         <td>{{ stat.fouls }}</td>
-        <td>{{ stat.three_pointers }}</td>
+        <td>{{ stat.three_pointers_made }}/{{ stat.three_pointers_attempted }}</td>
         <td>{{ stat.free_throws_made }}/{{ stat.free_throws_attempted }}</td>
       </tr>
     {% empty %}
@@ -35,8 +35,8 @@
     <tfoot>
       <tr>
         <td colspan="2"><strong>Totale</strong></td>
-        <td><strong>{{ total_points|default:"-" }}</strong></td>
-        <td><strong>{{ total_fouls|default:"-" }}</strong></td>
+        <td><strong>{{ totale_punti|default:"-" }}</strong></td>
+        <td><strong>{{ totale_falli|default:"-" }}</strong></td>
         <td colspan="2"></td>
       </tr>
     </tfoot>

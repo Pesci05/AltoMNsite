@@ -13,12 +13,12 @@
     <nav>
         <ul>
             <li><img src="{% static "logo.jpeg" %}" class="nav_logo"></li>
-            <li class = "link"><a href=" {% url 'home' %} ">Home</a></li>
-            <li class = "link">News</li>
-            <li class = "link">Stagione</li>
-            <li class = "link">Squadra</li>
-            <li class = "link">Società</li>
-            <li class = "link"><a href=" {% url 'login' %} ">Login</a></li>
+            <a href=" {% url 'home' %} "><li class = "linkNavBar">Home</li></a>
+            <li class = "linkNavBar">News</li>
+            <a href=" {% url "partite" %}"> <li class = "linkNavBar">Stagione</li></a>
+            <li class = "linkNavBar">Squadra</li>
+            <li class = "linkNavBar">Società</li>
+            <a href=" {% url 'login' %} "><li class = "linkNavBar">Login</li></a>
         </ul>
     </nav>
 

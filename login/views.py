@@ -34,7 +34,7 @@ class CustomLoginView(LoginView):
             return '/login/dashboard_coach'
         
 class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
-    template_name='/home/mpesci/AltoMNsite/login/templates/login/dirigentiDashboard.html'
+    template_name='login/dirigentiDashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,7 +43,7 @@ class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
         return context
 
 class CoachDashboardView(LoginRequiredMixin,TemplateView):
-    template_name = '/home/mpesci/AltoMNsite/login/templates/login/coachDashboard.html'
+    template_name = 'login/coachDashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,7 +54,7 @@ class CoachDashboardView(LoginRequiredMixin,TemplateView):
         if 'crea_match_form' not in context:
             context['crea_match_form'] = MatchCreationForm(user=self.request.user)
 
-        context['partite'] = Matches.objects.all()
+        context['partite'] = Matches.objects.filter(team__allenatori=self.request.user)
         return context
     
     def post(self, request, *args, **kwargs):

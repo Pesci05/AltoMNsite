@@ -20,7 +20,9 @@
             <div class="carousel-item">
                 <h2>{{ news.titolo }}</h2>
                 <p>{{ news.contenuto|truncatewords:15 }}</p>
-                <a href="{% url 'news_detail' news.slug %}">Leggi di più</a>
+                <a href="{% url 'news_detail' news.slug %}" class="news-read-btn" style="background-color: blue;">
+                    Leggi di più
+                </a>
             </div>
         {% empty %}
             <p>Nessuna notizia disponibile.</p>

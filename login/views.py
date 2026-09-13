@@ -3,6 +3,8 @@ from django.views.generic import CreateView,TemplateView
 from django.contrib.auth.views import LoginView,LogoutView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+
+from home.forms import CreaNewsForm
 from .forms import CustomLoginForm,CustomUserCretionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from teams.forms import AtletaCreationForm, SquadraCreationForm, MatchCreationForm
@@ -38,8 +40,13 @@ class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['atleta_form'] = AtletaCreationForm()
-        context['squadra_form'] = SquadraCreationForm()
+        if 'atleta_form' not in context:
+            context['atleta_form'] = AtletaCreationForm(user=self.request.user)
+
+        if 'squadra_form' not in context:    
+            context['squadra_form'] = SquadraCreationForm()
+        if 'cera_news_form' not in context:
+            context['crea_news_form'] = CreaNewsForm()
         return context
 
 class CoachDashboardView(LoginRequiredMixin,TemplateView):
@@ -48,7 +55,7 @@ class CoachDashboardView(LoginRequiredMixin,TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if 'atleta_form' not in context:
-            context['atleta_form'] = AtletaCreationForm()
+            context['atleta_form'] = AtletaCreationForm(user=self.request.user)
             
         # 2. Form per la partita (passiamo l'utente loggato per filtrare le sue squadre)
         if 'crea_match_form' not in context:

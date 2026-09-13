@@ -12,6 +12,12 @@ class CreaAtletaView(LoginRequiredMixin,CreateView):
     model = Atleta
     form_class = AtletaCreationForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        # Passa l'utente loggato al form per filtrare le squadre
+        kwargs['user'] = self.request.user
+        return kwargs
+
     def get_success_url(self):
         # 1. Cerca il parametro 'next' inviato dal form
         next_url = self.request.POST.get('next')

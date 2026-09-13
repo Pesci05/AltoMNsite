@@ -64,5 +64,37 @@
             {% endfor %}
             <button type="submit">Salva Atleta</button>
         </form>
+
+        <form method='post'  class="form-container" action="{% url 'creaNews' %}" novalidate>
+            <h2>Registra News</h2>
+            {% csrf_token %}
+            
+            <input type="hidden" name="next" value="{{ request.path }}">
+             {% if form.non_field_errors %}
+                <div class="alert alert-error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                        {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in crea_news_form %}
+                <div class="formItem">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if field.help_text %}
+                    <div class="form-help">{{ field.help_text }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit">Salva News</button>
+
+        </form>
     </div>
 {% endblock content %}

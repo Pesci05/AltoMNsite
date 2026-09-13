@@ -10,7 +10,7 @@ class CustomUserCretionForm(UserCreationForm):
 
     ruolo = forms.ChoiceField(
         choices=RUOLI_REGISTRAZIONE,
-        widget=forms.Select(attrs={'id': 'id_ruolo', 'class': 'form-control'}),
+        widget=forms.Select(attrs={'id': 'id_ruolo', 'class': 'custom-selection'}),
         label="Ruolo in società"
     )
     class Meta:

@@ -29,7 +29,7 @@ class SquadraCreationForm(forms.ModelForm):
 
 class AtletaCreationForm(forms.ModelForm):
     squadra = forms.ModelChoiceField(
-        queryset=Squadre.objects.all(), 
+        queryset=Squadre.objects.none(), 
         widget=forms.Select(attrs={'class': 'custom-selection'}),
         label = 'Squadra',
         required=False
@@ -101,6 +101,18 @@ class AtletaCreationForm(forms.ModelForm):
 
         return atleta
 
+    def __init__(self, *args, **kwargs):
+            user = kwargs.pop('user', None)
+            
+            super().__init__(*args, **kwargs)
+    
+            if user:
+                if user.ruolo == 'allenatori':
+                    self.fields['squadra'].queryset = Squadre.objects.filter(allenatori=user)
+                elif user.ruolo == 'dirigente':
+                    self.fields['squadra'].queryset = Squadre.objects.all()
+                
+
 
 class MatchCreationForm(forms.ModelForm):
     class Meta:
@@ -144,14 +156,18 @@ class MatchCreationForm(forms.ModelForm):
         }
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
-        
         super().__init__(*args, **kwargs)
+
+        print("UTENTE:", user)
+        print("RUOLO:", getattr(user, 'ruolo', 'Nessun ruolo'))
+
         if user:
             if user.ruolo == 'allenatori':
                 self.fields['team'].queryset = Squadre.objects.filter(allenatori=user)
-            else:
-                print("--- DEBUG FORM: Utente non è . Mostro tutte le squadre. ---")
-
+                print("Squadre allenatore:", self.fields['team'].queryset)
+            elif user.ruolo == 'dirigente':
+                self.fields['team'].queryset = Squadre.objects.all()
+                print("Tutte le squadre per dirigente:", self.fields['team'].queryset)
 class MatchUpdateForm(forms.ModelForm):
     class Meta:
         model = Matches

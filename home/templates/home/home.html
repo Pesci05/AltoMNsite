@@ -3,9 +3,29 @@
 {% block content %}
     <h1>Last Games</h1>
 
-    <ul>
-        {% for match in last_matches %}
-            <li>{{ match.giornoPartita }}: {{ match.team.nome }} vs {{ match.avversari }} - Score: {{ match.puntiFatti }}</li>
+    <div class="carousel">
+        <div class="group">
+            {% for match in last_matches %}
+                <div class="carousel-item">
+                    <p><h2>{{ match.team.nome }} vs {{ match.avversari }}</h2><p><h3>{% if match.puntiFatti is None %}DA GIOCARE{% else %} {{ match.puntiFatti }} {% endif %}</h3></p>{{ match.giornoPartita|date:"d/m/Y H:i"  }}</p> <p>{{ match.indirizzo }}</p></p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h1>News</h1>
+    <div class="carousel">
+        <div class="group">
+        {% for news in last_news %}
+            <div class="carousel-item">
+                <h2>{{ news.titolo }}</h2>
+                <p>{{ news.contenuto|truncatewords:15 }}</p>
+                <a href="{% url 'news_detail' news.slug %}">Leggi di più</a>
+            </div>
+        {% empty %}
+            <p>Nessuna notizia disponibile.</p>
         {% endfor %}
+        </div>
+    </div>
 {% endblock content %}
 

@@ -1,0 +1,18 @@
+{% extends "template.html" %}
+
+{% block title %}Notizie{% endblock title %}
+
+{% block content %}
+    <h1>Notizie</h1>
+    <div class="news-list">
+        {% for news in news_list %}
+            <div class="news-item">
+                <h2>{{ news.titolo }}</h2>
+                <p>{{ news.contenuto|truncatewords:30 }}</p>
+                <a href="{% url 'news_detail' news.slug %}">Leggi di più</a>
+            </div>
+        {% empty %}
+            <p>Nessuna notizia disponibile.</p>
+        {% endfor %}
+    </div>
+{% endblock content %}

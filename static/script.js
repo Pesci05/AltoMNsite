@@ -1,5 +1,5 @@
-/*const carousel = document.getElementsByClassName("Carousel");
-const news = document.getElementsByClassName("news");
+const carousel = document.getElementsByClassName("carousel");
+const news = document.getElementsByClassName("carousel-item");
 
 let index = 0;
 let direction = 1;
@@ -19,7 +19,7 @@ carousel[0].addEventListener('pointerdown', () => clearInterval(timer));
 carousel[0].addEventListener('pointerup', () => {
   index = Math.round(carousel[0].scrollLeft / carousel[0].clientWidth);
   timer = setInterval(autoPlay, 3000);
-});*/
+});
 
 function goToModificaPartita(){
     var select = document.getElementById('selezione_partita');

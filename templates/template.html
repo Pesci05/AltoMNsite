@@ -14,7 +14,7 @@
         <ul>
             <li><img src="{% static "logo.jpeg" %}" class="nav_logo"></li>
             <a href=" {% url 'home' %} "><li class = "linkNavBar">Home</li></a>
-            <li class = "linkNavBar">News</li>
+            <a href=" {% url 'news_list' %} "><li class = "linkNavBar">News</li></a>
             <a href=" {% url "partite" %}"> <li class = "linkNavBar">Stagione</li></a>
             <li class = "linkNavBar">Squadra</li>
             <li class = "linkNavBar">Società</li>

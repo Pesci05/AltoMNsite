@@ -1,6 +1,49 @@
 {% extends "template.html" %}
 {% block title %}Home{% endblock title %}
 {% block content %}
+    <h1>News</h1>
+    <div class="carousel">
+        <div class="group">
+        {% for item in last_news %}
+           <article class="news-card">
+                {% if item.immagine %}
+                    <div class="news-image-wrapper">
+                        <img src="{{ item.immagine.url }}" alt="{{ item.titolo }}">
+                    </div>
+                {% endif %}
+
+                <div class="news-content">
+                    <div class="news-meta">
+                        {{ item.data_pubblicazione|date:"d M Y" }}
+                    </div>
+
+                    <h2 class="news-title">
+                        <a href="{% url 'news_detail' item.slug %}">{{ item.titolo }}</a>
+                    </h2>
+
+                    <p class="news-excerpt">
+                        {{ item.contenuto|truncatechars:100 }}
+                    </p>
+
+                    <div class="news-card-footer">
+                        <span class="news-author">
+                            {% if item.autore %}
+                                By {{ item.autore.first_name|default:item.autore.username }}
+                            {% else %}
+                                Redazione
+                            {% endif %}
+                        </span>
+                        <a href="{% url 'news_detail' item.slug %}" class="news-read-btn">Leggi</a>
+                    </div>
+                </div>
+            </article>
+        {% empty %}
+            <p style="text-align: center; color: #64748b; grid-column: 1 / -1; padding: 30px;">Nessuna notizia disponibile al momento.</p>
+        
+        {% endfor %}
+        </div>
+    </div>
+
     <h1>Last Games</h1>
 
     <div class="carousel">
@@ -10,23 +53,6 @@
                     <p><h2>{{ match.team.nome }} vs {{ match.avversari }}</h2><p><h3>{% if match.puntiFatti is None %}DA GIOCARE{% else %} {{ match.puntiFatti }} {% endif %}</h3></p>{{ match.giornoPartita|date:"d/m/Y H:i"  }}</p> <p>{{ match.indirizzo }}</p></p>
                 </div>
             {% endfor %}
-        </div>
-    </div>
-
-    <h1>News</h1>
-    <div class="carousel">
-        <div class="group">
-        {% for news in last_news %}
-            <div class="carousel-item">
-                <h2>{{ news.titolo }}</h2>
-                <p>{{ news.contenuto|truncatewords:15 }}</p>
-                <a href="{% url 'news_detail' news.slug %}" class="news-read-btn" style="background-color: blue;">
-                    Leggi di più
-                </a>
-            </div>
-        {% empty %}
-            <p>Nessuna notizia disponibile.</p>
-        {% endfor %}
         </div>
     </div>
 {% endblock content %}

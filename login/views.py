@@ -49,6 +49,31 @@ class DirigentiDashboardView(LoginRequiredMixin,TemplateView):
             context['crea_news_form'] = CreaNewsForm()
         return context
 
+    def post(self, request, *args, **kwargs):
+        # Recupera il contesto base
+        context = self.get_context_data()
+
+        
+        # 1. GESTIONE FORM ATLETA (esempio)
+        if 'submit_atleta' in request.POST:
+            form_atleta = AtletaCreationForm(request.POST, user=request.user)
+            if form_atleta.is_valid():
+                form_atleta.save()
+                return redirect('dashboard_dirigente')
+            else:
+                context['atleta_form'] = form_atleta
+
+        # 2. GESTIONE FORM SQUADRA (esempio)
+        elif 'submit_squadra' in request.POST:
+            form_squadra = SquadraCreationForm(request.POST)
+            if form_squadra.is_valid():
+                form_squadra.save()
+                return redirect('dashboard_dirigente')
+            else:
+                context['squadra_form'] = form_squadra
+
+        # Se ci sono errori, ricarica la pagina mostrando i messaggi di errore nei form
+        return self.render_to_response(context)
 class CoachDashboardView(LoginRequiredMixin,TemplateView):
     template_name = 'login/coachDashboard.html'
 

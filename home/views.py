@@ -24,6 +24,15 @@ class CreaNewsView(CreateView):
     template_name = 'home/crea_news.html'
     form_class = CreaNewsForm
     success_url = reverse_lazy('dashboard_dirigente')  # Redirect to the dashboard after successful creation
+    
+    def form_valid(self, form):
+        # 1. ASSEGNA L'AUTORE: Prendi l'utente che sta facendo la richiesta
+        form.instance.autore = self.request.user
+        
+        # 2. SALVA: super().form_valid() salva automaticamente sia i testi che l'immagine (request.FILES)
+        return super().form_valid(form)
+
+    
 
 class NewsListView(ListView):
     template_name = 'home/news_list.html'

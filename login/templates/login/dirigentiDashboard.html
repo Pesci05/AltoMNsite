@@ -65,11 +65,11 @@
             <button type="submit">Salva Atleta</button>
         </form>
 
-        <form method='post'  class="form-container" action="{% url 'creaNews' %}" novalidate>
+        <form method='post'  class="form-container" action="{% url 'creaNews' %}"  enctype="multipart/form-data" novalidate>
             <h2>Registra News</h2>
             {% csrf_token %}
             
-            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="hidden" name="next" value="{{ request.path }}" >
              {% if form.non_field_errors %}
                 <div class="alert alert-error">
                     {% for error in form.non_field_errors %}
@@ -93,7 +93,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            <button type="submit">Salva News</button>
+            <button type="submit" name="submit_news">Salva News</button>
 
         </form>
     </div>

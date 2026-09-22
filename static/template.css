@@ -20,31 +20,19 @@ body {
 .container {
     margin: 1%;
 }
-
-nav ul{
-
+nav ul {
     list-style-type: none;
-
     margin: 0;
-
-    padding: 0;
-
+    padding: 0px;
     background-color: blue;
-
-    overflow: hidden;
-
-    float: center;
-
+    display: flex;
+    align-items: center;
 }
 
-nav li{
-
-float: left;
-
-color: white;
-
-text-align: center;
-
+nav li {
+    padding: 14px 20px;
+    color: white;
+    text-align: center;
 }
 
 .nav_logo{
@@ -440,3 +428,43 @@ button:active {
     background-color: darkcyan;
 }
 
+/* Contenitore principale del menu a tendina */
+nav ul li.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Stile della tendina a scomparsa */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    border-radius: 0 0 8px 8px;
+    border: 1px solid #334155;
+    top: 100%;
+    left: 0;
+}
+
+/* Link interni al menu a tendina */
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 0.95rem;
+    transition: background-color 0.2s ease;
+    float: none !important;
+}
+
+.dropdown-menu a:hover {
+    background-color: darkcyan;
+}
+
+/* Mostra il menu quando il mouse passa sopra la voce */
+nav ul li.dropdown:hover .dropdown-menu {
+    display: block;
+}

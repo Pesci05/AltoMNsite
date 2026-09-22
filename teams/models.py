@@ -17,6 +17,13 @@ class Squadre(models.Model):
         return f"{self.nome} ({self.categoria})"
 
 class Atleta(models.Model):
+    RUOLO_CHOICES = (
+        ('Play', 'Playmaker'),
+        ('Guardia', 'Guardia'),
+        ('Ala', 'Ala'),
+        ('AlaGrande', 'Ala Grande'),
+        ('Centro', 'Centro'),
+    )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -28,6 +35,7 @@ class Atleta(models.Model):
         on_delete=models.CASCADE,
         related_name='atleti'
     )
+    posizione = models.CharField(max_length=20, choices=RUOLO_CHOICES,default='Play')
     
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
@@ -51,7 +59,7 @@ class Matches(models.Model):
     
 
     players_stats = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
+        Atleta,
         through='PlayerMatchStats',
         related_name='match_performances'
     )
@@ -67,7 +75,7 @@ class Matches(models.Model):
 class PlayerMatchStats(models.Model):
     partita = models.ForeignKey(Matches, related_name='player_stats', on_delete=models.CASCADE)
     player = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        Atleta,
         on_delete=models.CASCADE,
         related_name='stats',
         limit_choices_to={'ruolo': 'atleta'}

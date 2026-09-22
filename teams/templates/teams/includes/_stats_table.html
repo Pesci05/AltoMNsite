@@ -7,6 +7,7 @@
       <th>Falli</th>
       <th>3 Punti (Fatti/Tirati)</th>
       <th>TL (Fatti/Tirati)</th>
+      <th>Ruolo</th>
     </tr>
   </thead>
   <tbody>
@@ -24,10 +25,11 @@
         <td>{{ stat.fouls }}</td>
         <td>{{ stat.three_pointers_made }}/{{ stat.three_pointers_attempted }}</td>
         <td>{{ stat.free_throws_made }}/{{ stat.free_throws_attempted }}</td>
+        <td>{{ stat.player.posizione|default:"-" }}</td>
       </tr>
     {% empty %}
       <tr>
-        <td colspan="6" class="text-center">Nessuna statistica inserita per questa partita.</td>
+        <td colspan="7" class="text-center">Nessuna statistica inserita per questa partita.</td>
       </tr>
     {% endfor %}
   </tbody>

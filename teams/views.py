@@ -145,3 +145,13 @@ class MatchDeleteView(LoginRequiredMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
+
+class TeamDetailView(DetailView):
+    model = Squadre
+    template_name = 'teams/team_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        team = self.object
+        context['squadra'] = Squadre.objects.get(pk=team.pk)
+        return context

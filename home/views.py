@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from home.models import News
-from teams.models import Matches
+from teams.models import Matches, Squadre
 from .forms import CreaNewsForm
 from django.urls import reverse_lazy
 
@@ -52,3 +52,5 @@ class NewsDetailView(DetailView):
         slug = self.kwargs.get('slug')
         context['news'] = News.objects.get(slug=slug)
         return context
+
+

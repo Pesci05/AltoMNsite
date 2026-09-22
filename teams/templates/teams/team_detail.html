@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+{% block title %}{{ squadra.nome }}{% endblock title %}
+
+{% block content %}
+    <h1>{{ squadra.nome }}</h1>
+
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Ruolo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for giocatore in squadra.atleti.all %}
+                <tr>
+                    <td>{{ giocatore.user.first_name }} {{ giocatore.user.last_name }}</td>
+                    <td>{{ giocatore.posizione|default:"-" }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content%}

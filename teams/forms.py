@@ -45,11 +45,16 @@ class AtletaCreationForm(forms.ModelForm):
         label='Email',
         widget=forms.EmailInput(attrs={'class':'fomr-control','placeholder':'mario.rossi@email.com'}),
         required=False)
+    ruolo = forms.ChoiceField(
+        choices=Atleta.RUOLO_CHOICES,
+        label='Ruolo',
+        widget=forms.Select(attrs={'class': 'custom-selection'})
+    )
 
     
     class Meta:
         model = Atleta
-        fields = ('first_name','last_name','email','squadra','data_nascita')
+        fields = ('first_name','last_name','email','squadra','data_nascita','ruolo')
         widgets = {
             'data_nascita': forms.DateInput(attrs={'type': 'date'}),
         }

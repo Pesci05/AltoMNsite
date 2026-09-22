@@ -16,8 +16,17 @@
             <a href=" {% url 'home' %} "><li class = "linkNavBar">Home</li></a>
             <a href=" {% url 'news_list' %} "><li class = "linkNavBar">News</li></a>
             <a href=" {% url "partite" %}"> <li class = "linkNavBar">Stagione</li></a>
-            <li class = "linkNavBar">Squadre</li>
-            <li class = "linkNavBar">Società</li>
+            <li class="dropdown">
+                <span class="linkNavBar" style="cursor: pointer;">Squadre&nbsp;▼</span>
+                <div class="dropdown-menu">
+                    {% for squadra in squadre_globali %}
+                        <a href="{% url 'dettaglio_squadra' squadra.pk %}">{{ squadra.nome }}</a>
+                    {% empty %}
+                        <a href="#">Nessuna squadra</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <a href=" {% url 'home' %} "><li class = "linkNavBar">Società</li></a>
             <a href=" {% url 'login' %} "><li class = "linkNavBar">Login</li></a>
         </ul>
     </nav>

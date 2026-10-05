@@ -1,0 +1,23 @@
+{% extends "template.html" %}
+
+{% block title %}Società{% endblock title %}
+
+{% block content %}
+    <h1>Chi siamo</h1>
+    <p>Siamo una realtà sportiva che si occupa di basket a livello giovanile e senior, e ci occupiamo di promuovere lo sport, crescita e formare atleti giovani e adulti. Siamo punto di riferimnto per chi vive lo sport con impegno, dai primi passi dei Minibasket fino all'età adulta.</p>
+    <p>Siamo attivi nel territorio dell'alto mantovano, sconfinand spesso nelle province di Brescia, Verona e in tutta la Lombardia.</p>
+    <h2>Staff</h2>
+    <p>Il nostro staff è composto da allenatori qualificati e preparati, che lavorano con passione e dedizione per garantire un ambiente sicuro e stimolante per i nostri atleti.</p>
+    <h3>Allenatori</h3>
+    <ul>
+        {% for allentore in allenatori %}
+        <li>{{ allentore.first_name }} {{ allentore.last_name }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Dirigenti</h3>
+    <ul>
+        {% for dirigente in dirigenti %}
+        <li>{{ dirigente.first_name }} {{ dirigente.last_name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

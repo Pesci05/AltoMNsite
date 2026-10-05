@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 from home.models import News
+from teams.forms import User
 from teams.models import Matches, Squadre
 from .forms import CreaNewsForm
+from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
 
@@ -53,4 +55,13 @@ class NewsDetailView(DetailView):
         context['news'] = News.objects.get(slug=slug)
         return context
 
+class SocietaView(ListView):
+    template_name = 'home/societa.html'
+    model = Squadre
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['allenatori'] = User.objects.filter(ruolo='allenatori')
+        context['dirigenti'] = User.objects.filter(ruolo= 'dirigente')
+        return context
+    

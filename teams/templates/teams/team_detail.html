@@ -14,7 +14,7 @@
         <tbody>
             {% for giocatore in squadra.atleti.all %}
                 <tr>
-                    <td>{{ giocatore.user.first_name }} {{ giocatore.user.last_name }}</td>
+                    <td><a href="{% url 'dettaglio_atleta' giocatore.pk %}">{{ giocatore.user.first_name }} {{ giocatore.user.last_name }}</a></td>
                     <td>{{ giocatore.posizione|default:"-" }}</td>
                 </tr>
             {% endfor %}

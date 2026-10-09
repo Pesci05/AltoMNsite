@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'template.html' %}
 
 {% block content %}
-  <h3>Ultima Prestazione</h3>
+  <h3>Statistiche di {{ atleta.user.first_name }} {{ atleta.user.last_name }}</h3>
   
   <!-- Inclusione della card singola -->
-  {% include 'teams/includes/_player_stat_card.html' with stat=latest_player_stat %}
+  {% include 'teams/includes/_player_card.html' %}
 {% endblock %}

@@ -20,7 +20,7 @@
             -
           {% endif %}
         </td>
-        <td>{{ stat.player.get_full_name }}</td>
+        <td>{{ stat.player.user.first_name }} {{ stat.player.user.last_name }}</td>
         <td><strong>{{ stat.points }}</strong></td>
         <td>{{ stat.fouls }}</td>
         <td>{{ stat.three_pointers_made }}/{{ stat.three_pointers_attempted }}</td>

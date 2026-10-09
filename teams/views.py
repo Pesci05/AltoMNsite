@@ -155,3 +155,23 @@ class TeamDetailView(DetailView):
         team = self.object
         context['squadra'] = Squadre.objects.get(pk=team.pk)
         return context
+
+class AtletaDetailView(DetailView):
+    model = PlayerMatchStats
+    template_name = 'teams/player_detail.html'
+    context_object_name = 'atleta'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        atleta = self.object
+        partite = PlayerMatchStats.objects.filter(pk=atleta.pk)
+        context['totale_punti'] = partite.aggregate(Sum('points'))['points__sum'] or 0
+        context['totale_falli'] = partite.aggregate(Sum('fouls'))['fouls__sum'] or 0
+        context['three_pointers_made'] = partite.aggregate(Sum('three_pointers_made'))['three_pointers_made__sum'] or 0
+        context['three_pointers_attempted'] = partite.aggregate(Sum('three_pointers_attempted'))['three_pointers_attempted__sum'] or 0
+        context['free_throws_made'] = partite.aggregate(Sum('free_throws_made'))['free_throws_made__sum'] or 0
+        context['free_throws_attempted'] = partite.aggregate(Sum('free_throws_attempted'))['free_throws_attempted__sum'] or 0
+        context['three_pointers_percentage'] = (context['three_pointers_made'] / context['three_pointers_attempted'] * 100) if context['three_pointers_attempted'] > 0 else 0
+        context['free_throws_percentage'] = (context['free_throws_made'] / context['free_throws_attempted'] * 100) if context['free_throws_attempted'] > 0 else 0
+        context['partite'] = partite
+        return context

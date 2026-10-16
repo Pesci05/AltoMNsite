@@ -26,7 +26,6 @@ class SquadraCreationForm(forms.ModelForm):
         if 'allenatori' in self.fields:
             self.fields['allenatori'].queryset = User.objects.filter(ruolo='allenatori')
     
-
 class AtletaCreationForm(forms.ModelForm):
     squadra = forms.ModelChoiceField(
         queryset=Squadre.objects.none(), 
@@ -45,7 +44,7 @@ class AtletaCreationForm(forms.ModelForm):
         label='Email',
         widget=forms.EmailInput(attrs={'class':'fomr-control','placeholder':'mario.rossi@email.com'}),
         required=False)
-    ruolo = forms.ChoiceField(
+    posizione = forms.ChoiceField(
         choices=Atleta.RUOLO_CHOICES,
         label='Ruolo',
         widget=forms.Select(attrs={'class': 'custom-selection'})
@@ -116,8 +115,6 @@ class AtletaCreationForm(forms.ModelForm):
                     self.fields['squadra'].queryset = Squadre.objects.filter(allenatori=user)
                 elif user.ruolo == 'dirigente':
                     self.fields['squadra'].queryset = Squadre.objects.all()
-                
-
 
 class MatchCreationForm(forms.ModelForm):
     class Meta:
@@ -173,6 +170,7 @@ class MatchCreationForm(forms.ModelForm):
             elif user.ruolo == 'dirigente':
                 self.fields['team'].queryset = Squadre.objects.all()
                 print("Tutte le squadre per dirigente:", self.fields['team'].queryset)
+
 class MatchUpdateForm(forms.ModelForm):
     class Meta:
         model = Matches

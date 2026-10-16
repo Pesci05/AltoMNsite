@@ -115,4 +115,4 @@ class PlayerMatchStats(models.Model):
                 ]
 
     def __str__(self):
-        return f"{self.player.get_full_name()} - {self.points} pt in {self.partita}"
+        return f"{self.player} - {self.points} pt in {self.partita}"
